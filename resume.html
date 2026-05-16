@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Garvit Arora | AI Product Leader</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #0a0f1c;
+        color: #e6f1ff;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    h1, h2 {
+        color: #00d4ff;
+    }
+
+    .header {
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .tagline {
+        color: #8892b0;
+        font-size: 1.1em;
+    }
+
+    .section {
+        margin: 40px 0;
+        padding: 20px;
+        background: #11182b;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
+    }
+
+    .skills {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .skill {
+        margin-bottom: 10px;
+    }
+
+    .bar {
+        height: 8px;
+        background: #1f2a44;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .progress {
+        height: 100%;
+        background: linear-gradient(90deg, #00d4ff, #007cf0);
+    }
+
+    .experience-card {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #0f172a;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .experience-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    }
+
+    .details {
+        display: none;
+        margin-top: 10px;
+        color: #8892b0;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        background: #00d4ff20;
+        border: 1px solid #00d4ff;
+        border-radius: 20px;
+        margin: 5px 5px 0 0;
+        font-size: 0.8em;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 40px;
+        color: #8892b0;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Garvit Arora</h1>
+        <div class="tagline">
+            AI Product Owner | Fintech | Cloud | 10+ Years Experience
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>About Me</h2>
+        <p>
+            Product leader specializing in AI transformation, fintech platforms, and scalable cloud solutions.
+            Experienced in building data-driven products, leading cross-functional teams, and driving
+            end-to-end product lifecycle from ideation to launch.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Skills</h2>
+        <div class="skills">
+
+            <div class="skill">
+                AI / ML Product Strategy
+                <div class="bar"><div class="progress" style="width:90%"></div></div>
+            </div>
+
+            <div class="skill">
+                Cloud (AWS / Azure)
+                <div class="bar"><div class="progress" style="width:85%"></div></div>
+            </div>
+
+            <div class="skill">
+                Agile & Scrum
+                <div class="bar"><div class="progress" style="width:95%"></div></div>
+            </div>
+
+            <div class="skill">
+                Data-driven Decision Making
+                <div class="bar"><div class="progress" style="width:88%"></div></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Experience</h2>
+
+        <div class="experience-card" onclick="toggle(this)">
+            <strong>Technical Product Owner</strong> – Financial Services
+            <div class="details">
+                <ul>
+                    <li>Led AI/ML transformation initiatives across banking products</li>
+                    <li>Owned product lifecycle from ideation to delivery</li>
+                    <li>Collaborated with engineering, data, and business teams</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="experience-card" onclick="toggle(this)">
+            <strong>Technical Product Manager</strong> – Techfour Solutions
+            <div class="details">
+                <ul>
+                    <li>Revamped Safetipin app homepage to improve engagement</li>
+                    <li>Drove customer engagement strategy</li>
+                    <li>Improved retention metrics through UX enhancements</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section">
+        <h2>Key Achievements</h2>
+        <div class="badge">AI Transformation</div>
+        <div class="badge">Fintech Platforms</div>
+        <div class="badge">Cloud Migration</div>
+        <div class="badge">Customer Engagement</div>
+    </div>
+
+    <div class="section">
+        <h2>Certifications</h2>
+        <p>Certified Scrum Product Owner (CSPO)</p>
+    </div>
+
+    <div class="footer">
+        © 2026 Garvit Arora | Designed as a Product Experience
+    </div>
+
+</div>
+
+<script>
+    function toggle(card) {
+        const details = card.querySelector('.details');
+        details.style.display = details.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+
+</body>
+</html>
