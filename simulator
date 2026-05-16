@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RAG Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .card {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      background: #38bdf8;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .step {
+      opacity: 0.3;
+      transition: 0.5s;
+    }
+
+    .active {
+      opacity: 1;
+      border-left: 4px solid #38bdf8;
+      padding-left: 12px;
+    }
+
+    .vector {
+      font-family: monospace;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .doc {
+      background: #334155;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .highlight {
+      background: #22c55e;
+      color: black;
+    }
+
+    .prompt-box {
+      background: #020617;
+      padding: 10px;
+      border-radius: 10px;
+      font-family: monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    .output {
+      background: #22c55e;
+      color: black;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🧠 RAG Simulator</h1>
+
+  <!-- Input -->
+  <div class="card">
+    <div class="title">1. User Query</div>
+    <input id="query" placeholder="Ask something... e.g. 'How does RAG work?'" />
+    <button onclick="runRAG()">Run RAG Pipeline</button>
+  </div>
+
+  <!-- Steps -->
+  <div id="steps">
+
+    <div class="card step" id="step1">
+      <div class="title">2. Convert Query to Embedding</div>
+      <div id="embedding" class="vector"></div>
+    </div>
+
+    <div class="card step" id="step2">
+      <div class="title">3. Vector Search (Semantic Similarity)</div>
+      <div id="docs"></div>
+    </div>
+
+    <div class="card step" id="step3">
+      <div class="title">4. Top-K Retrieved Chunks</div>
+      <div id="topk"></div>
+    </div>
+
+    <div class="card step" id="step4">
+      <div class="title">5. Prompt Construction</div>
+      <div id="prompt" class="prompt-box"></div>
+    </div>
+
+    <div class="card step" id="step5">
+      <div class="title">6. LLM Generated Answer</div>
+      <div id="output" class="output"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const knowledgeBase = [
+    "RAG stands for Retrieval Augmented Generation.",
+    "RAG improves LLM accuracy by grounding responses in external data.",
+    "Embeddings convert text into vectors for semantic understanding.",
+    "Vector databases store embeddings for fast similarity search.",
+    "Top-K retrieval selects the most relevant chunks.",
+    "Prompt injection adds retrieved context into LLM input.",
+    "RAG helps reduce hallucinations in language models."
+  ];
+
+  function fakeEmbedding(text) {
+    return Array.from({ length: 5 }, () => Math.random().toFixed(2));
+  }
+
+  function similarity() {
+    return Math.random(); // simulate similarity score
+  }
+
+  function activateStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  async function runRAG() {
+    const query = document.getElementById("query").value;
+
+    if (!query) {
+      alert("Enter a query");
+      return;
+    }
+
+    // Step 1: Embedding
+    activateStep("step1");
+    const embed = fakeEmbedding(query);
+    document.getElementById("embedding").innerText = "[" + embed.join(", ") + "]";
+
+    await delay(1000);
+
+    // Step 2: Vector Search
+    activateStep("step2");
+    const scoredDocs = knowledgeBase.map(doc => ({
+      doc,
+      score: similarity()
+    }));
+
+    document.getElementById("docs").innerHTML = scoredDocs
+      .map(d => `<div class="doc">${d.doc} <br><small>Score: ${d.score.toFixed(2)}</small></div>`)
+      .join("");
+
+    await delay(1500);
+
+    // Step 3: Top-K
+    activateStep("step3");
+    const topK = scoredDocs.sort((a, b) => b.score - a.score).slice(0, 3);
+
+    document.getElementById("topk").innerHTML = topK
+      .map(d => `<div class="doc highlight">${d.doc}</div>`)
+      .join("");
+
+    await delay(1000);
+
+    // Step 4: Prompt
+    activateStep("step4");
+    const context = topK.map(d => d.doc).join("\n");
+
+    const prompt = `Answer the question using context below:
+
+Context:
+${context}
+
+Question:
+${query}`;
+
+    document.getElementById("prompt").innerText = prompt;
+
+    await delay(1500);
+
+    // Step 5: Output
+    activateStep("step5");
+
+    const answer = "This answer is generated using retrieved context, reducing hallucination and improving accuracy.";
+
+    document.getElementById("output").innerText = answer;
+  }
+
+  function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+</script>
+
+</body>
+</html>
